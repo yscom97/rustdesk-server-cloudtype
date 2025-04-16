@@ -1,13 +1,21 @@
-name: rustdesk-server
 services:
-  - name: hbbs
-    image: rustdesk/hbbs:latest
-    ports:
-      - 21115
-    command: hbbs -r 127.0.0.1:21116
+  hbbs:
+    container_name: hbbs
+    image: rustdesk/rustdesk-server:latest
+    command: hbbs
+    volumes:
+      - ./data:/root
+    network_mode: "host"
 
-  - name: hbbr
-    image: rustdesk/hbbr:latest
-    ports:
-      - 21116
-      - 21116/udp
+    depends_on:
+      - hbbr
+    restart: unless-stopped
+
+  hbbr:
+    container_name: hbbr
+    image: rustdesk/rustdesk-server:latest
+    command: hbbr
+    volumes:
+      - ./data:/root
+    network_mode: "host"
+    restart: unless-stopped
