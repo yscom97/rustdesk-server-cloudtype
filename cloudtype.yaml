@@ -1,0 +1,13 @@
+name: rustdesk-server
+services:
+  - name: hbbs
+    image: rustdesk/hbbs:latest
+    ports:
+      - 21115
+    command: hbbs -r 127.0.0.1:21116
+
+  - name: hbbr
+    image: rustdesk/hbbr:latest
+    ports:
+      - 21116
+      - 21116/udp
